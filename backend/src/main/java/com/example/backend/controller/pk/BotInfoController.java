@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
-@RequestMapping("/pk")
+@RequestMapping("/pk/")
 public class BotInfoController {
-    @RequestMapping("/getbotinfo")
+    @RequestMapping("/getbotinfo/")
     public Map<String, String> getBotInfo(){
         Map<String, String> map = new HashMap<>();
+
         map.put("name", "tiger");
         map.put("rating", "1900");
         return map;
