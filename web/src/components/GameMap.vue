@@ -2,13 +2,13 @@
     <!-- 在这里添加ref,实现和组件绑定 -->
     <!--  parent变量用来获取游戏区域外面的辅助边界div在不同浏览器大小下的的实际大小 -->
     <div ref="parent" class="gamemap">
-        <canvas ref="canvas"></canvas>
+        <canvas ref="canvas" tabindex="0"></canvas> <!-- tabindex = "0" 后可以去设置绑定用户的键盘输入事件 -->
     </div>
 </template>
 
 <script>
 import { GameMap } from '@/assets/scripts/GameMap'
-import {ref, onMounted} from 'vue'    
+import { ref, onMounted } from 'vue'
 export default {
     setup() {
         let parent = ref(null);
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-div.gamemap{
+div.gamemap {
     width: 100%;
     height: 100%;
     display: flex;
