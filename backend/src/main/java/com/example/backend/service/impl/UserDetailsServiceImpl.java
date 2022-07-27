@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.pojo.User;
