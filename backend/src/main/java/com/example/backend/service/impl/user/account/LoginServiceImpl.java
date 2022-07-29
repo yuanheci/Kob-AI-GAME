@@ -21,12 +21,15 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Map<String, String> getToken(String username, String password) {
+        //如何从AuthenticationManager获得用户的数据信息，核心代码:
         //将登陆时输入的用户名和密码封装一个类，并对密码加密
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, password);
-        //登陆失败会自动处理
+        //登陆失败会自动处理,如果没有返回异常和null值，那么验证服务便是完成
+        //该方法会去调用UserDetailsServiceImpl.loadUserByUsername,查找数据库从而完成验证服务
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
+        //获得用户信息，即UserDetails对象
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getPrincipal();
         User user = loginUser.getUser();
         String jwt = JwtUtil.createJWT(user.getId().toString());

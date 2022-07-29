@@ -27,6 +27,7 @@ public class RegisterServiceImpl implements RegisterService {
             map.put("error_message", "用户名不能为空");
             return map;
         }
+
         if(password == null || confirmedpassword == null){
             map.put("error_message", "密码不能为空");
             return map;
