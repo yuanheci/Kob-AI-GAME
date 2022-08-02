@@ -8,7 +8,7 @@ export default createStore({
   },
   actions: {
   },
-  modules: {
+  modules: {   //定义state的子模块
     user: ModuleUser,
   }
 })

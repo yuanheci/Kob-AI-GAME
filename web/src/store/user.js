@@ -60,7 +60,7 @@ export default {
         getinfo(context, data) {
             $.ajax({
                 url: "http://localhost:3000/user/account/info/",
-                tupe: "get",
+                type: "get",
                 headers: {
                     Authorization: "Bearer " + context.state.token,
                 },

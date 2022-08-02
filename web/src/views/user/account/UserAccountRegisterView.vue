@@ -41,7 +41,7 @@ export default {
         let confirmedpassword = ref('');
         let error_message = ref('');
 
-        const register = () => {
+        const register = () => {    //不修改store.state中的内容，所以不放在store/user.js中
             $.ajax({
                 url: "http://localhost:3000/user/account/register/",
                 type: "post",

@@ -20,7 +20,7 @@ public class InfoServiceImpl implements InfoService {
       的实现类，所以可以接收
     * */
     @Override
-    public Map<String, String> getinfo() {
+    public Map<String, String> getInfo() {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
