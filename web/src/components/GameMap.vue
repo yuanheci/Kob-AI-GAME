@@ -9,8 +9,10 @@
 <script>
 import { GameMap } from '@/assets/scripts/GameMap'
 import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex';
 export default {
     setup() {
+        const store = useStore();
         let parent = ref(null);
         let canvas = ref(null);
 
@@ -18,7 +20,7 @@ export default {
         onMounted(() => {
             //初始化一个GameMap对象
             //传入canvas画布和辅助区域div，那么就可以在类中去计算了
-            new GameMap(canvas.value.getContext('2d'), parent.value);
+            new GameMap(canvas.value.getContext('2d'), parent.value, store);
         });
 
         return {

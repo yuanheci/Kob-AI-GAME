@@ -1,6 +1,6 @@
 <template>
-  <NavBar></NavBar>
-  <router-view></router-view>
+    <NavBar></NavBar>
+    <router-view></router-view>
 </template>
 
 <script>
@@ -9,19 +9,19 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 
 export default {
-  components: {
-    NavBar,
-  },
-  setup() {
+    components: {
+        NavBar,
+    },
+    setup() {
 
-  }
+    }
 }
 </script>
 
 <style>
 body {
-  background-image: url("@/assets/images/background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
+    background-image: url("@/assets/images/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 </style>
