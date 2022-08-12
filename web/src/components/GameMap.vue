@@ -20,7 +20,9 @@ export default {
         onMounted(() => {
             //初始化一个GameMap对象
             //传入canvas画布和辅助区域div，那么就可以在类中去计算了
-            new GameMap(canvas.value.getContext('2d'), parent.value, store);
+            store.commit(
+                "updateGameObject",
+                new GameMap(canvas.value.getContext('2d'), parent.value, store));
         });
 
         return {

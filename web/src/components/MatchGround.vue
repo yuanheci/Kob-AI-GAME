@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="col-12" style="text-align: center; margin-top: 10vh">
-                <button @click="click_match_btn" type="button" class="btn btn-primary btn-lg">{{ match_btn_info
+                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{ match_btn_info
                 }}</button>
             </div>
         </div>

@@ -16,7 +16,6 @@ import java.util.Map;
 public class RegisterServiceImpl implements RegisterService {
     @Autowired
     UserMapper userMapper;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
