@@ -33,7 +33,7 @@ export default {
 
             socket.onopen = () => {
                 console.log("connected!");
-                store.commit("updateSocket", socket)
+                store.commit("updateSocket", socket)  //s
             }
             socket.onmessage = msg => {
                 //spring中的JSON传输中，数据放在data中
@@ -68,14 +68,14 @@ export default {
                 }
             }
 
-            socket.onclose = () => {
+            socket.onclose = () => {    //表示链接已经关闭时触发
                 console.log("disconnected!");
                 store.commit("updateStatus", "matching");
             }
         })
 
         onUnmounted(() => {
-            socket.close();
+            socket.close();      //手动关闭链接
         })
     }
 };
