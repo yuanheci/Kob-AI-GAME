@@ -2,13 +2,18 @@ package com.example.backend.consumer.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.backend.consumer.WebSocketServer;
+import com.example.backend.pojo.Bot;
 import com.example.backend.pojo.Record;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static com.example.backend.consumer.WebSocketServer.restTemplate;
 
 public class Game extends Thread{
     private final Integer rows;
@@ -26,14 +31,37 @@ public class Game extends Thread{
     private String status = "playing";  //playing -> finished
     private String loser = "";  //all: 平局, A: A输， B: B输了
 
-    public Game(Integer rows, Integer cols, Integer inner_walls_count, Integer idA, Integer idB){
+    private final static String addBotUrl = "http://127.0.0.1:3002/bot/add/";
+
+    public Game(
+            Integer rows,
+            Integer cols,
+            Integer inner_walls_count,
+            Integer idA,
+            Bot botA,
+            Integer idB,
+            Bot botB
+    ){
         this.rows = rows;
         this.cols = cols;
         this.inner_walls_count = inner_walls_count;
         this.g = new int[rows][cols];
+
+        Integer botIdA = -1, botIdB = -1;
+        String botCodeA = "", botCodeB = "";
+        //如果是亲自操作那么根据botId = -1查出来的botA为空，否则表示是AI，那么可以获得其代码
+        if(botA != null){
+            botIdA = botA.getId();
+            botCodeA = botA.getContent();
+        }
+        if(botB != null){
+            botIdB = botB.getId();
+            botCodeB = botB.getContent();
+        }
+
         //这里认为A是最下角的蛇，B是右上角的蛇
-        playerA = new Player(idA, rows - 2, 1, new ArrayList<>());
-        playerB = new Player(idB, 1, cols - 2, new ArrayList<>());
+        playerA = new Player(idA, botIdA, botCodeA, rows - 2, 1, new ArrayList<>());
+        playerB = new Player(idB, botIdB, botCodeB, 1, cols - 2, new ArrayList<>());
     }
 
     public Player getPlayerA(){
@@ -123,6 +151,40 @@ public class Game extends Thread{
         }
     }
 
+    //将当前的局面编码成字符串返回
+    //认为设定编码格式：地图#me.sx#me.sy#我的操作序列#you.sx#you.sy#对手的操作序列
+    private String getInput(Player player){
+        Player me, you;
+        if(playerA.getId().equals(player.getId())){
+            me = playerA;
+            you = playerB;
+        }else{
+            me = playerB;
+            you = playerA;
+        }
+
+        return getMapString() + "#" +
+                me.getSx() + "#" +
+                me.getSy() + "#(" +
+                me.getStepsString() + ")#" +
+                you.getSx() + "#" +
+                you.getSy() + "#(" +
+                you.getStepsString() + ")";
+    }
+
+    //判断是否要发送代码
+    private void sendBotCode(Player player){
+        //System.out.println(player.getBotId());
+        if(player.getBotId().equals(-1)) return;  //亲自出马，不需要执行代码
+        MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
+        data.add("user_id", player.getId().toString());
+        data.add("bot_code", player.getBotCode());
+        data.add("input", getInput(player));
+
+        //WebSocketServer.restTemplate.postForObject(addBotUrl, data, String.class);
+        restTemplate.postForObject(addBotUrl, data, String.class);
+    }
+
     private boolean nextStep(){   //等待两名玩家的下一步操作
         //前端设定的是每秒画5个格子，所以画一个格子的时间至少为200ms,如果在此期间输入了多个操作，前端只会保留最后一个
         //这会导致中间的某些操作被遗漏，所以后端要至少间隔200ms向前端发送信息。
@@ -131,6 +193,8 @@ public class Game extends Thread{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        sendBotCode(playerA);
+        sendBotCode(playerB);
 
         //每一步双方可以输入操作的时间为5s，每5s来检测一下双方是否均输入完毕
         for(int i = 0; i < 50; i++){
@@ -208,6 +272,7 @@ public class Game extends Thread{
 
     }
 
+    //根据双方的WebSocket链接返回全部信息
     private void sendAllMessge(String message){
         if(WebSocketServer.users.get(playerA.getId()) != null)
             WebSocketServer.users.get(playerA.getId()).sendMessage(message);
@@ -219,7 +284,7 @@ public class Game extends Thread{
         StringBuilder res = new StringBuilder();
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                res.append(g[i ][j]);
+                res.append(g[i][j]);
             }
         }
         return res.toString();
