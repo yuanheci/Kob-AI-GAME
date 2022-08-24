@@ -39,7 +39,7 @@ public class WebSocketServer {
        WebSocketServer不是spring原有的单例模式，所以要定义成static,这样recordMapper
        就是属于类的，在第一次注入的时候就变成了非 null
     */
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     public static RecordMapper recordMapper;
     private static BotMapper botMapper;     //Bot对应的数据库映射
     public static RestTemplate restTemplate;

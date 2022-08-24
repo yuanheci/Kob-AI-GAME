@@ -25,6 +25,7 @@ export default {
         let socket = null;
 
         store.commit("updateLoser", "none");
+        store.commit("updateIsRecord", false);   //改回不是录像
 
         onMounted(() => {
             store.commit("updateOpponent", {

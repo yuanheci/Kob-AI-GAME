@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PkIndexView from "../views/pk/PkIndexView"
 import RecordIndexView from "../views/record/RecordIndexView"
+import RecordContentView from "../views/record/RecordContentView"
 import RanklistIndexView from "../views/ranklist/RanklistIndexView"
 import UserBotIndexView from "../views/user/bot/UserBotIndexView"
 import NotFound from "../views/error/NotFound"
@@ -32,7 +33,15 @@ const routes = [
     meta: {
       requestAuth: true,
     }
-  },
+    },
+    {
+        path: "/record/:recordId/",     //此处用到了路由跳转传参，通过加:实现
+        name: "record_content",
+        component: RecordContentView,
+        meta: {
+          requestAuth: true,
+        }
+      },
   {
     path: "/ranklist/",
     name: "ranklist_index",
