@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kob.matchingsystem</groupId>
-    <artifactId>matchingsystem</artifactId>
+    <groupId>com.kob.botrunningsystem</groupId>
+    <artifactId>botrunningsystem</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
