@@ -102,7 +102,7 @@ export default {
         const pull_page = page => {
             current_page = page;    //更新当前页面
             $.ajax({
-                url: "http://localhost:3000/record/getlist/",
+                url: "https://yuanheci.top/api/record/getlist/",
                 type: "get",
                 data: {
                     page,

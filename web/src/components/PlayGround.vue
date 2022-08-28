@@ -7,7 +7,7 @@
 
 <script>
 import GameMap from "./GameMap.vue"
-export default{
+export default {
     components: {
         GameMap,
     }
@@ -15,10 +15,9 @@ export default{
 </script>
 
 <style scoped>
-
-div.playground{
+div.playground {
     width: 60vw;
     height: 70vh;
-    margin: 40px auto;
+    margin: 30px auto;
 }
 </style>

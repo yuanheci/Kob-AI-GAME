@@ -2,6 +2,22 @@
     <PlayGround v-if="$store.state.pk.status === 'playing'" />
     <MatchGround v-if="$store.state.pk.status === 'matching'" />
     <ResultBoard v-if="$store.state.pk.loser !== 'none'" />
+
+    <div class="user-color-lb" v-if="$store.state.pk.status === 'playing' &&
+    parseInt($store.state.user.id) === parseInt($store.state.pk.a_id)">
+        己方颜色：蓝色
+    </div>
+
+    <div class="user-color-ro" v-if="$store.state.pk.status === 'playing' &&
+    parseInt($store.state.user.id) === parseInt($store.state.pk.b_id)">
+        己方颜色：红色
+    </div>
+
+    <!-- <div class=" user-color-lb" v-if="$store.state.pk.status === 'playing' &&
+    parseInt($store.state.user.id) === parseInt($store.state.pk.a_id)">左下角</div>
+    <div class="user-color-ro" v-if="$store.state.pk.status === 'playing' &&
+    parseInt($store.state.user.id) === parseInt($store.state.pk.b_id)">右上角</div> -->
+
 </template>
 
 <script>
@@ -20,7 +36,7 @@ export default {
 
     setup() {
         const store = useStore();
-        const socketUrl = `ws://localhost:3000/websocket/${store.state.user.token}/`;
+        const socketUrl = `wss://yuanheci.top/websocket/${store.state.user.token}/`;
 
         let socket = null;
 
@@ -85,4 +101,31 @@ export default {
 </script>
 
 <style scoped>
+div.user-color-lb {
+    height: 60px;
+    width: 530px;
+    background-color: #4876EC;
+
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    line-height: 60px;
+
+    margin: 0 auto;
+}
+
+div.user-color-ro {
+    height: 60px;
+    width: 530px;
+    background-color: #F94848;
+
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 60px;
+
+    margin: 0 auto;
+}
 </style>

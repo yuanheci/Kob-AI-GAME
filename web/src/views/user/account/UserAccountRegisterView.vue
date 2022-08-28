@@ -44,7 +44,7 @@ export default {
         const register = () => {
             //不修改store.state中的内容，所以不放在store/user.js中
             $.ajax({
-                url: "http://localhost:3000/user/account/register/",
+                url: "https://yuanheci.top/api/user/account/register/",
                 type: "post",
                 data: {
                     username: username.value,
