@@ -18,5 +18,6 @@ public class LoginController {
             String username = map.get("username");
             String password = map.get("password");
             return loginService.getToken(username, password);
+
     }
 }

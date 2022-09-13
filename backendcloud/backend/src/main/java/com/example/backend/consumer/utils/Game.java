@@ -33,7 +33,6 @@ public class Game extends Thread{
     private String loser = "";  //all: 平局, A: A输， B: B输了
 
     private final static String addBotUrl = "http://127.0.0.1:3002/bot/add/";
-
     public Game(
             Integer rows,
             Integer cols,
@@ -215,6 +214,7 @@ public class Game extends Thread{
                 e.printStackTrace();
             }
         }
+
         return false;
     }
 

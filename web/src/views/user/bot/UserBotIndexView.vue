@@ -5,6 +5,44 @@
                 <div class="card" style="margin-top: 20px">
                     <div class="card-body">
                         <img :src="$store.state.user.photo" alt="" style="width: 100%" />
+                        <!-- <button style="margin-top: 10px" type="button" class="btn btn-secondary">修改头像</button> -->
+
+                        <button style="margin: 10px 0 0 90px" type="button" class="btn btn-secondary"
+                            data-bs-toggle="modal" data-bs-target="#updateImg">
+                            修改头像
+                        </button>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="updateImg" tabindex="-1">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">修改头像</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="update-url-title" class="form-label">URL</label>
+                                            <input v-model="image" type="text" class="form-control"
+                                                id="update-url-title" placeholder="请输入URL" />
+                                        </div>
+                                        <div style="color: red">{{updateImgErr}}</div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <div class="error-message">{{ botadd.error_message }}</div>
+                                        <button type="button" class="btn btn-primary" @click="update_images">
+                                            确认
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,6 +205,8 @@ export default {
 
         const store = useStore();
         let bots = ref([]);
+        let image = ref('');
+        let updateImgErr = ref('');
 
         const botadd = reactive({
             title: "",
@@ -259,12 +299,45 @@ export default {
             });
         };
 
+        const update_images = () => {
+            console.log(image.value);
+            $.ajax({
+                url: "https://yuanheci.top/api/user/account/updateImg/",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    url: image.value,
+                }),
+                headers: {
+                    Authorization: "Bearer " + store.state.user.token,
+                },
+                success(resp) {
+                    if (resp.error_message === "success") {
+                        Modal.getInstance("#updateImg").hide(); //根据Modal的id来关闭
+                        store.dispatch("getinfo", {  //更新头像，重新渲染到前端
+                            success() {
+                                console.log("success");
+                            },
+                            error() {
+                                console.log("error");
+                            }
+                        });
+                    } else {
+                        updateImgErr.value = resp.error_message;
+                    }
+                },
+            });
+        };
+
         return {
             bots,
             botadd,
+            image,
+            updateImgErr,
             add_bot,
             remove_bot,
             update_bot,
+            update_images,
         };
     },
 };
