@@ -36,7 +36,7 @@ export default {
 
     setup() {
         const store = useStore();
-        const socketUrl = `wss://yuanheci.top/websocket/${store.state.user.token}/`;
+        const socketUrl = `wss://kob.yuanheci.top/websocket/${store.state.user.token}/`;
 
         let socket = null;
 

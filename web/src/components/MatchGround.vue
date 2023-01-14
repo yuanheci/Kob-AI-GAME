@@ -29,7 +29,8 @@
                 </div>
             </div>
             <div class="col-12" style="text-align: center; margin-top: 10vh">
-                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{ match_btn_info
+                <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{
+                    match_btn_info
                 }}</button>
             </div>
         </div>
@@ -70,7 +71,7 @@ export default {
 
         const refresh_bots = () => {
             $.ajax({
-                url: "https://yuanheci.top/api/user/bot/getlist/",
+                url: "https://kob.yuanheci.top/api/user/bot/getlist/",
                 type: "get",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,

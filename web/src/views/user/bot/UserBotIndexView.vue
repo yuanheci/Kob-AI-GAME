@@ -28,7 +28,7 @@
                                             <input v-model="image" type="text" class="form-control"
                                                 id="update-url-title" placeholder="请输入URL" />
                                         </div>
-                                        <div style="color: red">{{updateImgErr}}</div>
+                                        <div style="color: red">{{ updateImgErr }}</div>
                                     </div>
 
                                     <div class="modal-footer">
@@ -217,7 +217,7 @@ export default {
 
         const refresh_bots = () => {
             $.ajax({
-                url: "https://yuanheci.top/api/user/bot/getlist/",
+                url: "https://kob.yuanheci.top/api/user/bot/getlist/",
                 type: "get",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,
@@ -232,7 +232,7 @@ export default {
         const add_bot = () => {
             botadd.error_message = "";
             $.ajax({
-                url: "https://yuanheci.top/api/user/bot/add/",
+                url: "https://kob.yuanheci.top/api/user/bot/add/",
                 type: "post",
                 data: {
                     title: botadd.title,
@@ -277,7 +277,7 @@ export default {
         const update_bot = (bot) => {
             botadd.error_message = "";
             $.ajax({
-                url: "https://yuanheci.top/api/user/bot/update/",
+                url: "https://kob.yuanheci.top/api/user/bot/update/",
                 type: "post",
                 data: {
                     bot_id: bot.id,
@@ -302,7 +302,7 @@ export default {
         const update_images = () => {
             console.log(image.value);
             $.ajax({
-                url: "https://yuanheci.top/api/user/account/updateImg/",
+                url: "https://kob.yuanheci.top/api/user/account/updateImg/",
                 type: "post",
                 contentType: "application/json",
                 data: JSON.stringify({
